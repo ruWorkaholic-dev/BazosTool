@@ -1,5 +1,21 @@
 # BazosTool
 
+## Install BazosTool(Windous):
+open cmd (Win + R)\
+cd Bazos\
+pip install -r requirements.txt\
+open config/config.py (add BOT API and proxy)\
+python BazosParserBot.py
+
+## Installing BazosTool(MacOS)
+open Terminal\
+cd Bazos\
+pip3 install -r requirements.txt\
+open config/config.py (add BOT API and proxy)\
+python3 BazosParserBot.py
+
+
+
 ## Bot || aiogram
 In session:\
 -Searche Item by filters\
