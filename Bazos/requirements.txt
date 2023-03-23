@@ -1,0 +1,7 @@
+aiogram==2.25.1
+asyncio==3.4.3
+aiohttp-proxy==0.1.2
+aiohttp==3.8.3
+pyuseragents==1.0.5
+beautifulsoup4==4.10.0
+lxml==4.7.1
