@@ -26,11 +26,13 @@ from aiogram.utils.markdown import hbold, hcode, hlink
 from aiogram import Bot, Dispatcher, types, executor
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
+from urllib.parse import quote
+
 
 from driver.bazos import ParserBazosSK
 from driver.BazosPhone import BazosSkPhone
 
-from config.config import BOT_API
+from config.config import BOT_API,TEXT
 
 bot = Bot(BOT_API, parse_mode=types.ParseMode.HTML, disable_web_page_preview=True)
 dp = Dispatcher(bot, storage=MemoryStorage())
@@ -206,8 +208,12 @@ async def send_post(call: CallbackQuery):
 				else:
 					number = f"+421{number}"
 
-				whatsApp = f"https://api.whatsapp.com/send?phone={number}"
-				whatsAppWeb = f"https://web.whatsapp.com/send/?phone={number}" 
+
+
+				whatsApp_text = TEXT.replace("[product_name]", f"{dataPost[0]}").replace("[product_location]", f"{dataPost[3]}").replace("[product_price]", f"{dataPost[2]}").replace("[product_link]", f"{dataPost[5]}")
+
+				whatsApp = f"https://api.whatsapp.com/send?phone={number}&text={quote(whatsApp_text)}"
+				whatsAppWeb = f"https://web.whatsapp.com/send/?phone={number}&text={quote(whatsApp_text)}" 
 				viber = f"https://viber.click/{number[1:]}"
 				telegram = f"https://t.me/{number[1:]}"
 
@@ -222,6 +228,7 @@ async def send_post(call: CallbackQuery):
 						f"{hlink('🔗 Seller Reference', dataPost[7])}\n\n" \
 						f"👁 No. views on the product: {hbold(dataPost[8])}\n"\
 						f"📂 No. of seller's listings: {hbold(dataPost[9])}\n\n"\
+						f"📞 Phone: {hcode(number)}\n\n"\
 						f"{hlink('WhatsApp', whatsApp)}\n" \
 						f"{hlink('WhatsApp Web', whatsAppWeb)}\n" \
 						f"{hlink('Telegram', telegram)}\n" \
@@ -296,6 +303,3 @@ async def me(message: types.Message):
 
 if __name__ == '__main__':
 	executor.start_polling(dp, on_startup=set_default_commands, skip_updates=True)
-
-
-
